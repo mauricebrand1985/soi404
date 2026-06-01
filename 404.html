@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — ทางตันที่ใช่ · SOI 404</title>
+<meta name="description" content="You found a wrong turn. We're good at those.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@500;600;700;800;900&family=Archivo:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Martian+Mono:wght@300;400;500;600&family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="pages.css">
+<style>
+  /* pixel-dissolve cluster, echoing the logo's trailing edge */
+  .pixwrap{position:relative;display:inline-block}
+  .pixfield{position:absolute;top:0;right:-8%;bottom:0;width:48%;pointer-events:none;overflow:visible}
+  .pixfield i{position:absolute;display:block;background:var(--gold-bright);
+    box-shadow:0 0 8px rgba(240,180,41,.7);border-radius:1px;opacity:0;
+    animation:pixDrift var(--dur,3s) var(--ease) var(--del,0s) infinite}
+  @keyframes pixDrift{
+    0%{opacity:0;transform:translate(-10px,0) scale(1)}
+    12%{opacity:1}
+    70%{opacity:.7}
+    100%{opacity:0;transform:translate(var(--dx,40px),var(--dy,0)) scale(.4)}
+  }
+  .route{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted);
+    margin-bottom:34px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .route b{color:var(--gold-bright)}
+  @media (prefers-reduced-motion:reduce){.pixfield i{animation:none;opacity:.6}}
+</style>
+</head>
+<body data-page="404">
+
+<main>
+  <section class="deadend" data-screen-label="404">
+    <div class="deadend__sky"></div>
+    <div class="deadend__inner">
+      <p class="route rise">
+        <span data-th="กำลังหาเส้นทาง…" data-en="routing…">กำลังหาเส้นทาง…</span>
+        <span data-th="ไม่พบที่อยู่…" data-en="address not found…">ไม่พบที่อยู่…</span>
+        <b>404 → FOUND</b>
+      </p>
+
+      <div class="pixwrap rise d1">
+        <span class="glitch404 flicker idle" data-text="404">404</span>
+        <span class="pixfield" id="pixfield"></span>
+      </div>
+
+      <div class="rise d2" style="margin-top:14px"><span class="soi-sign" data-th="ทางตันที่ใช่" data-en="A dead end. The right one.">ทางตันที่ใช่</span></div>
+
+      <h2 class="rise d2" data-th="คุณเจอทางที่เลี้ยวผิด" data-en="You found a wrong turn.">คุณเจอทางที่เลี้ยวผิด</h2>
+      <p class="rise d3" data-th="เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ" data-en="We're good at those. But this page doesn't exist — let's get you back to the main road.">เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ</p>
+
+      <div class="rise d3" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn--solid" href="index.html" data-th="กลับสู่ถนนใหญ่" data-en="Back to the main road">กลับสู่ถนนใหญ่</a>
+        <a class="btn btn--ghost live" href="work.html" style="--bw:1.5px;border-radius:8px" data-th="ดูผลงาน" data-en="See the work">ดูผลงาน</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="electric.js"></script>
+<script src="site.js"></script>
+<script>
+  // build the pixel-dissolve field (logo motif)
+  (function () {
+    const f = document.getElementById('pixfield');
+    if (!f) return;
+    const N = window.matchMedia('(max-width:760px)').matches ? 22 : 40;
+    for (let i = 0; i < N; i++) {
+      const s = document.createElement('i');
+      const sz = 4 + Math.random() * 12;
+      const left = Math.pow(Math.random(), 1.7) * 90;        // denser near the edge
+      const top = Math.random() * 100;
+      s.style.width = s.style.height = sz + 'px';
+      s.style.left = left + '%';
+      s.style.top = top + '%';
+      s.style.setProperty('--dx', (24 + Math.random() * 70) + 'px');
+      s.style.setProperty('--dy', ((Math.random() - .5) * 36) + 'px');
+      s.style.setProperty('--dur', (2.4 + Math.random() * 2.6) + 's');
+      s.style.setProperty('--del', (Math.random() * 3) + 's');
+      f.appendChild(s);
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+/* ============================================================
+   SOI 404 — theme-light.css
+   WHITE variant for Services & About. Applied via
+   <body data-theme="light">. Text is black or gold; the logo
+   switches to its black version (handled in site.js).
+   ============================================================ */
+body[data-theme="light"]{
+  --bg:#f4f0e8;
+  --black:#f4f0e8;
+  --bg-soft:#ece7dc;
+  --bg-glass:rgba(244,240,232,.72);
+  --bg-panel:rgba(0,0,0,.03);
+
+  --ink:#16120d;
+  --ink-soft:#373027;
+  --muted:#5f5748;
+  --faint:#8f8674;
+
+  --line:rgba(28,20,6,.22);
+  --line-soft:rgba(28,20,6,.1);
+
+  --gold:#9a6e10;
+  --gold-bright:#b9851a;
+  --gold-hot:#d8a531;
+  --gold-deep:#7c5408;
+  --hot:#7c5408;
+
+  --glow-gold:0 0 20px rgba(154,110,16,.22);
+  --glow-soft:0 0 48px rgba(154,110,16,.1);
+  color:var(--ink);
+  background:var(--bg);
+}
+
+/* keep the electric canvas + atmosphere so light pages keep their detail;
+   just soften the dark scanlines/vignette so they read on white. */
+body[data-theme="light"] .atmos__scan{opacity:.12}
+body[data-theme="light"] .atmos__vign{background:radial-gradient(120% 90% at 50% 0%,transparent 55%,rgba(120,90,20,.1) 100%)}
+body[data-theme="light"] .atmos__grain{opacity:.04}
+
+/* selection */
+body[data-theme="light"] ::selection{background:var(--gold);color:#fff}
+
+/* NAV / DRAWER — white, not warm cream */
+body[data-theme="light"] .nav{
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.6))}
+body[data-theme="light"] .nav.shrink{
+  background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(255,255,255,.85))}
+body[data-theme="light"] .drawer{background:rgba(255,255,255,.98)}
+
+/* DISCIPLINE / EDITORIAL CARDS — keep them visibly boxed + animated */
+body[data-theme="light"] .disc,
+body[data-theme="light"] .acard{
+  background:linear-gradient(180deg,#ffffff,rgba(255,255,255,.55));
+  --cop:.7;box-shadow:0 10px 30px rgba(40,30,10,.06)}
+body[data-theme="light"] .disc:hover,
+body[data-theme="light"] .acard:hover{--cop:1;box-shadow:0 16px 44px rgba(40,30,10,.1)}
+body[data-theme="light"] .disc__bg{
+  background:radial-gradient(80% 80% at 80% 0%,rgba(154,110,16,.09),transparent 60%)}
+body[data-theme="light"] .disc__num{-webkit-text-stroke-color:rgba(154,110,16,.26)}
+body[data-theme="light"] .disc:hover .disc__num{-webkit-text-stroke-color:rgba(154,110,16,.5)}
+body[data-theme="light"] .soi-num{-webkit-text-stroke-color:rgba(154,110,16,.32)}
+body[data-theme="light"] .acard--ph{
+  background:repeating-linear-gradient(135deg,rgba(154,110,16,.09) 0 12px,transparent 12px 24px),
+    linear-gradient(135deg,#ece7dc,#f4f0e8)}
+
+/* FLOATING CONTACT — readable dark-on-light glass */
+body[data-theme="light"] .fab__btn{
+  background:rgba(255,253,248,.82);
+  box-shadow:0 8px 28px rgba(0,0,0,.12),inset 0 0 0 1px rgba(28,20,6,.12)}
+body[data-theme="light"] .fab__btn .tip{background:rgba(255,253,248,.94);color:var(--gold)}
+body[data-theme="light"] .fab__btn svg{filter:none}
+
+/* FOOTER */
+body[data-theme="light"] .foot__brand img{filter:none}
+
+/* solid button keeps the BRIGHT gold (like the contact page), not the muted light-theme gold */
+body[data-theme="light"] .btn--solid{
+  background:linear-gradient(180deg,#ffd877,#f0b429);color:#241804;
+  box-shadow:0 8px 24px rgba(240,180,41,.34)}
+body[data-theme="light"] .btn--solid:hover{box-shadow:0 12px 32px rgba(240,180,41,.46)}
