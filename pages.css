@@ -367,13 +367,24 @@ html[lang="th"] .form__success h3{font-family:var(--thai)}
 .cbtn{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;
   background:var(--bg-glass);--cop:.4;--cspeed:7s;transition:transform .4s var(--ease)}
 .cbtn:hover{transform:translateX(6px);--cop:1;--cspeed:3s}
-.cbtn__ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;
-  box-shadow:inset 0 0 0 1.5px var(--line);color:var(--gold-bright)}
+.cbtn .cbtn__ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;
+  box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink)}
 .cbtn__ic svg{width:22px;height:22px}
 .cbtn b{display:block;font-family:var(--display);font-weight:700;font-size:1.05rem}
 .cbtn span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;color:var(--muted)}
 html[lang="th"] .cbtn b{font-family:var(--thai-ui)}
 html[lang="th"] .cbtn span{font-family:var(--thai-ui);letter-spacing:0;font-size:.8rem}
+
+/* alternating gold / white contact buttons — keep .live running light on all */
+.cbtn--gold b{color:var(--gold-bright)}
+.cbtn--gold .cbtn__ic{box-shadow:inset 0 0 0 1.5px var(--gold);color:var(--gold-bright)}
+.cbtn--gold{--cop:.72;box-shadow:0 0 26px rgba(240,180,41,.22),0 0 64px rgba(240,180,41,.09)}
+.cbtn--gold::after{box-shadow:inset 0 0 0 1px rgba(240,180,41,.42)}
+
+.cbtn--white b{color:var(--ink)}
+.cbtn--white .cbtn__ic{box-shadow:inset 0 0 0 1.5px rgba(233,231,224,.28);color:var(--ink)}
+.cbtn--white{box-shadow:0 0 22px rgba(233,231,224,.09),0 0 52px rgba(233,231,224,.04)}
+.cbtn--white::after{box-shadow:inset 0 0 0 1px rgba(233,231,224,.18)}
 
 /* ===== 404 SHOWPIECE ======================================= */
 .deadend{min-height:100svh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;

@@ -1,0 +1,136 @@
+/* ============================================================
+   SOI 404 — branding.css
+   Page-specific bits for the Branding service page.
+   Rides on base.css + pages.css + theme-light.css + social.css.
+   Adds the brand mockups (logo sheet, stationery flat-lay,
+   digital + merch collage, starter-pack spread) and the
+   à-la-carte price menu. White template.
+   ============================================================ */
+
+/* shared little mark glyph used across mockups */
+.br-glyph{aspect-ratio:1;border-radius:22%;position:relative;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep));
+  box-shadow:0 10px 22px -12px rgba(154,110,16,.6)}
+.br-glyph::after{content:"";position:absolute;inset:30%;border-radius:50%;
+  background:#fff;box-shadow:inset 0 0 0 3px var(--gold-deep)}
+
+/* ===== CAT 01 — logo lockup / brand sheet ==================== */
+.br-sheet{width:88%;display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.br-tile{background:#fff;border-radius:13px;
+  box-shadow:inset 0 0 0 1px var(--line),0 12px 26px -16px rgba(60,44,12,.4)}
+.br-sheet__main{aspect-ratio:4/3;display:grid;place-items:center}
+.br-sheet__main .br-glyph{width:42%}
+.br-sheet__side{display:grid;grid-template-rows:auto auto auto;gap:12px}
+.br-var{display:flex;align-items:center;gap:9px;padding:11px 12px}
+.br-var .br-glyph{width:26px;border-radius:7px}
+.br-var i{height:7px;border-radius:4px;background:var(--line);flex:1}
+.br-swatch{display:flex;gap:6px;padding:11px}
+.br-swatch i{flex:1;height:24px;border-radius:6px}
+.br-swatch i:nth-child(1){background:var(--gold-bright)}
+.br-swatch i:nth-child(2){background:var(--gold-deep)}
+.br-swatch i:nth-child(3){background:#1c1406}
+.br-swatch i:nth-child(4){background:#e9e1cf}
+.br-type{padding:12px;display:grid;gap:9px}
+.br-type b{height:13px;width:62%;border-radius:4px;background:rgba(28,20,6,.7);display:block}
+.br-type span{height:7px;width:88%;border-radius:4px;background:var(--line);display:block}
+
+/* ===== CAT 02 — stationery flat-lay on a dark surface ======== */
+.br-flat{width:90%;aspect-ratio:4/3;position:relative;border-radius:16px;overflow:hidden;
+  background:radial-gradient(120% 100% at 28% 0%,#241b11,#0b0906);
+  box-shadow:inset 0 0 0 1px rgba(240,180,41,.16),0 26px 54px -22px rgba(0,0,0,.6)}
+.br-flat>*{position:absolute;border-radius:9px}
+.br-flat .card{left:9%;bottom:13%;width:48%;aspect-ratio:1.72;
+  background:linear-gradient(150deg,#fffdf8,#efe7d6);box-shadow:0 16px 30px -12px rgba(0,0,0,.55);
+  display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px}
+.br-flat .card .br-glyph{width:30px;border-radius:8px}
+.br-flat .card i{height:5px;border-radius:3px;background:var(--line)}
+.br-flat .card i.s{width:60%}
+.br-flat .card.back{left:15%;bottom:22%;background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep));
+  box-shadow:0 18px 32px -12px rgba(0,0,0,.5)}
+.br-flat .letter{right:7%;top:9%;width:31%;aspect-ratio:.74;background:#fffdf8;padding:13px;
+  display:flex;flex-direction:column;gap:6px;box-shadow:0 16px 30px -12px rgba(0,0,0,.5)}
+.br-flat .letter .br-glyph{width:20px;border-radius:6px;margin-bottom:4px}
+.br-flat .letter i{height:4px;border-radius:3px;background:var(--line)}
+.br-flat .letter i.s{width:55%}
+.br-flat .env{right:10%;bottom:11%;width:36%;aspect-ratio:1.5;background:#efe7d6;
+  box-shadow:0 16px 30px -12px rgba(0,0,0,.5)}
+.br-flat .env::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 49%,rgba(28,20,6,.18) 49.5% 50.5%,transparent 51%),
+    linear-gradient(225deg,transparent 49%,rgba(28,20,6,.18) 49.5% 50.5%,transparent 51%)}
+
+/* ===== CAT 03 — digital signature + merch =================== */
+.br-digi{width:90%;display:grid;grid-template-columns:1.35fr 1fr;gap:14px;align-items:stretch}
+.br-sig{background:#fff;border-radius:13px;padding:18px;display:grid;grid-template-columns:auto 1fr;gap:14px;
+  align-items:center;box-shadow:inset 0 0 0 1px var(--line),0 12px 26px -16px rgba(60,44,12,.4)}
+.br-sig__av{width:50px;height:50px;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep))}
+.br-sig__lines{display:grid;gap:8px}
+.br-sig__lines i{height:7px;border-radius:4px;background:var(--line)}
+.br-sig__lines i.g{width:55%;background:linear-gradient(90deg,var(--gold-bright),var(--gold))}
+.br-sig__lines i.s{width:80%}
+.br-merch{display:grid;grid-template-rows:1fr 1fr;gap:14px}
+.br-merch>div{background:#fff;border-radius:13px;position:relative;
+  box-shadow:inset 0 0 0 1px var(--line),0 12px 26px -16px rgba(60,44,12,.4);display:grid;place-items:center}
+/* tote */
+.br-tote{width:42%;aspect-ratio:.92;border-radius:4px 4px 7px 7px;
+  background:linear-gradient(160deg,#efe7d6,#e2d8c2);position:relative}
+.br-tote::before{content:"";position:absolute;left:18%;right:18%;top:-44%;height:60%;
+  border:3px solid var(--gold-deep);border-bottom:none;border-radius:60% 60% 0 0}
+.br-tote::after{content:"";position:absolute;inset:30% 28%;border-radius:50%;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep))}
+/* mug */
+.br-mug{width:40%;aspect-ratio:1.15;border-radius:6px 6px 9px 9px;
+  background:linear-gradient(160deg,#fffdf8,#efe7d6);position:relative}
+.br-mug::before{content:"";position:absolute;right:-22%;top:24%;width:26%;height:46%;
+  border:4px solid #efe7d6;border-left:none;border-radius:0 60% 60% 0}
+.br-mug::after{content:"";position:absolute;inset:26% 26%;border-radius:5px;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep))}
+
+/* ===== STARTER PACK — full set spread ======================= */
+.br-spread{width:94%;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:30px;gap:11px}
+.br-spread>div{border-radius:11px;background:#fff;position:relative;
+  box-shadow:inset 0 0 0 1px var(--line),0 12px 26px -18px rgba(60,44,12,.45);
+  display:flex;flex-direction:column;gap:6px;padding:13px;justify-content:center}
+.br-spread .logo{grid-column:1/3;grid-row:1/3;align-items:center;justify-content:center}
+.br-spread .logo .br-glyph{width:54%}
+.br-spread .card{grid-column:3/5;grid-row:1/2;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep));box-shadow:0 12px 24px -14px rgba(154,110,16,.6)}
+.br-spread .sheet{grid-column:5/7;grid-row:1/4}
+.br-spread .letter{grid-column:1/3;grid-row:3/5}
+.br-spread .sig{grid-column:3/5;grid-row:2/4;flex-direction:row;align-items:center;gap:10px}
+.br-spread .sig .br-glyph{width:30px;height:30px;flex:0 0 auto;border-radius:8px}
+.br-spread i{height:6px;border-radius:4px;background:var(--line);display:block}
+.br-spread i.g{background:linear-gradient(90deg,var(--gold-bright),var(--gold));width:60%}
+.br-spread i.s{width:78%}
+.br-spread .sig__lines{display:grid;gap:6px;flex:1}
+@media (max-width:520px){.br-spread{grid-auto-rows:24px}}
+
+/* price line inside the starter bundle */
+.br-price{font-family:var(--mono);font-weight:600;font-size:1.6rem;color:var(--gold);margin:2px 0 22px}
+html[lang="th"] .br-price{font-family:var(--thai-ui)}
+
+/* ===== À LA CARTE MENU ====================================== */
+.br-menu{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(30px,6vw,80px);
+  max-width:980px;margin:clamp(34px,5vh,54px) auto 0}
+.br-menu__item{display:flex;align-items:baseline;gap:14px;padding:18px 2px;
+  border-bottom:1px solid var(--line-soft)}
+.br-menu__name{font-family:var(--display);font-weight:700;font-size:1.12rem;color:var(--ink);white-space:nowrap}
+html[lang="th"] .br-menu__name{font-family:var(--thai);font-weight:700}
+.br-menu__dot{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-3px)}
+.br-menu__price{font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;color:var(--gold);
+  font-weight:600;white-space:nowrap}
+html[lang="th"] .br-menu__price{font-family:var(--thai-ui);letter-spacing:0;font-size:.92rem}
+@media (max-width:680px){.br-menu{grid-template-columns:1fr;column-gap:0}}
+
+/* ===== HERO floating cluster → brand pieces ================= */
+.sm-hero__art .float{background:linear-gradient(180deg,#fff,#f4eee2)}
+.fl-a{width:48%;aspect-ratio:1.7!important;left:3%;top:8%;transform:rotate(-6deg);border-radius:12px}
+.fl-b{width:30%;aspect-ratio:1!important;right:8%;top:24%;transform:rotate(6deg);border-radius:22%}
+.fl-c{width:42%;aspect-ratio:1.55!important;left:22%;bottom:6%;transform:rotate(-2deg);border-radius:10px}
+.sm-hero__art .fl-b::before{inset:26%;border-radius:50%;
+  background:repeating-linear-gradient(135deg,rgba(154,110,16,.16) 0 8px,transparent 8px 16px)}
+
+/* 3-step process: keep the proc grid centred at 3 columns */
+.br-proc{grid-template-columns:repeat(3,1fr)}
+.br-proc::before{left:16%;right:16%}
+@media (max-width:900px){.br-proc{grid-template-columns:1fr}}

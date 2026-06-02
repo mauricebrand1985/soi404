@@ -1,0 +1,110 @@
+/* ============================================================
+   SOI 404 — websites.css
+   Page-specific bits for the Websites service page.
+   Rides on base.css + pages.css + theme-light.css + social.css.
+   Only adds what those don't cover: the website mockups
+   (desktop browsers, phone, clickable-prototype, signature hero)
+   and the compact "More we build" strip. White template.
+   ============================================================ */
+
+/* ---- the framed mockup panel reuses social.css .frame; inside it we drop
+        the site's existing dark .browser window (pages.css). Give it room. */
+.wb-art .frame{display:block}
+.wb-art .browser{width:100%}
+
+/* a faint reflection/podium glow under each framed browser */
+.wb-art{position:relative}
+
+/* ===== SERVICE 02 — desktop + phone combo ===================== */
+.wb-combo{position:relative;padding-bottom:8px}
+.wb-combo .browser{width:100%}
+.wb-phone{position:absolute;right:-6px;bottom:-22px;width:24%;min-width:92px;aspect-ratio:9/19;
+  border-radius:18px;background:#0d0b09;padding:8px 6px;z-index:3;
+  box-shadow:0 26px 50px -18px rgba(40,30,10,.5),inset 0 0 0 1.5px rgba(240,180,41,.28);
+  display:flex;flex-direction:column;gap:6px}
+.wb-phone__bar{height:6px;width:40%;margin:2px auto 4px;border-radius:4px;background:rgba(255,255,255,.18)}
+.wb-phone__hero{height:34%;border-radius:9px;
+  background:radial-gradient(120% 90% at 70% 0%,rgba(240,180,41,.3),transparent 60%),linear-gradient(160deg,#241c10,#100c08)}
+.wb-phone__ln{height:6px;border-radius:4px;background:rgba(239,231,214,.45)}
+.wb-phone__ln.s{width:70%}
+.wb-phone__btn{margin-top:auto;height:20px;border-radius:11px;background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
+@media (max-width:520px){.wb-phone{width:30%;right:4px}}
+
+/* extra stacked rows for the multi-section desktop site */
+.mk-rows{position:absolute;left:22px;right:22px;bottom:16px;display:grid;gap:8px}
+.mk-rows .r{height:18px;border-radius:6px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.mk-rows .r.tall{height:34px}
+.mk-rows .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mk-rows .cols i{height:30px;border-radius:6px;background:rgba(240,180,41,.1);box-shadow:inset 0 0 0 1px rgba(240,180,41,.16)}
+
+/* ===== SERVICE 03 — clickable prototype (frames + gold arrows) = */
+.wb-proto{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;
+  padding:clamp(20px,3vw,38px)}
+.wb-fr{width:118px;flex:0 0 auto;height:150px;border-radius:12px;background:#fff;
+  box-shadow:0 16px 36px -18px rgba(60,44,12,.4),inset 0 0 0 1.5px var(--line);
+  padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
+.wb-fr__top{height:9px;width:55%;border-radius:5px;background:rgba(28,20,6,.6)}
+.wb-fr__blk{border-radius:7px;background:rgba(154,110,16,.12);box-shadow:inset 0 0 0 1px var(--line-soft)}
+.wb-fr__blk--hero{height:54px;background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep));box-shadow:none}
+.wb-fr__blk.a{height:16px}.wb-fr__blk.b{height:12px;width:80%}
+.wb-fr__cta{margin-top:auto;height:16px;width:60%;border-radius:9px;background:rgba(154,110,16,.22)}
+.wb-fr--active{box-shadow:0 18px 40px -16px rgba(154,110,16,.5),inset 0 0 0 1.5px var(--gold),0 0 0 4px rgba(154,110,16,.12)}
+.wb-arrow{flex:0 0 auto;width:clamp(26px,3vw,46px);height:30px;display:grid;place-items:center;color:var(--gold)}
+.wb-arrow svg{width:100%;height:auto}
+@media (max-width:520px){
+  .wb-fr{width:30%}
+  .wb-arrow{width:8%}
+}
+
+/* ===== SERVICE 04 — signature: dramatic animated gold hero ===== */
+.wb-feat__win .browser__screen{aspect-ratio:16/9}
+.wb-hero3d{position:absolute;inset:0;overflow:hidden}
+.wb-hero3d__glow{position:absolute;inset:-20% -10% auto -10%;height:140%;
+  background:radial-gradient(60% 80% at 30% 20%,rgba(240,180,41,.55),transparent 60%),
+    radial-gradient(50% 70% at 80% 60%,rgba(255,213,107,.4),transparent 60%);
+  filter:blur(6px);animation:wbHero 9s var(--ease) infinite alternate}
+.wb-hero3d__grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(240,180,41,.16) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(240,180,41,.16) 1px,transparent 1px);
+  background-size:34px 34px;
+  -webkit-mask:radial-gradient(80% 80% at 50% 40%,#000,transparent 75%);
+  mask:radial-gradient(80% 80% at 50% 40%,#000,transparent 75%);
+  transform:perspective(600px) rotateX(46deg) translateY(22%) scale(1.4);transform-origin:center}
+.wb-hero3d__copy{position:absolute;left:8%;top:30%;right:40%;z-index:2}
+.wb-hero3d__copy .mk-bar{box-shadow:0 0 18px rgba(240,180,41,.4)}
+.wb-hero3d__glitch{position:absolute;right:8%;top:24%;width:30%;aspect-ratio:1;border-radius:14px;z-index:2;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep));
+  box-shadow:0 18px 40px -14px rgba(154,110,16,.6);animation:wbGlitch 6s steps(1) infinite}
+@keyframes wbHero{0%{transform:translate(-4%,0) scale(1)}100%{transform:translate(6%,-3%) scale(1.12)}}
+@keyframes wbGlitch{
+  0%,92%,100%{clip-path:inset(0 0 0 0);transform:translate(0,0)}
+  93%{clip-path:inset(20% 0 38% 0);transform:translate(-5px,0)}
+  95%{clip-path:inset(60% 0 8% 0);transform:translate(6px,0)}
+  97%{clip-path:inset(8% 0 70% 0);transform:translate(-3px,0)}
+}
+
+/* ===== "MORE WE BUILD" compact strip ========================= */
+.wb-more{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:clamp(34px,5vh,54px)}
+.wb-more .acard{border-radius:15px;padding:clamp(22px,2.2vw,28px);display:flex;flex-direction:column}
+.wb-more__ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;color:var(--gold);
+  background:rgba(154,110,16,.08);box-shadow:inset 0 0 0 1.5px var(--line);margin-bottom:18px}
+.wb-more__ic svg{width:22px;height:22px}
+.wb-more h3{font-family:var(--display);font-weight:800;font-size:1.12rem;line-height:1.12;margin-bottom:8px}
+html[lang="th"] .wb-more h3{font-family:var(--thai);font-weight:700;line-height:1.3}
+.wb-more p{color:var(--muted);font-size:.92rem;line-height:1.45}
+html[lang="th"] .wb-more p{font-family:var(--thai)}
+@media (max-width:900px){.wb-more{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.wb-more{grid-template-columns:1fr}}
+
+/* ===== HERO floating cluster → browser windows ================ */
+.sm-hero__art .float{aspect-ratio:16/10!important;background:linear-gradient(180deg,#fff,#f4eee2)}
+.sm-hero__art .float::after{content:"";position:absolute;top:0;left:0;right:0;height:16%;
+  background:#17140f;border-radius:16px 16px 0 0}
+.sm-hero__art .float::before{inset:18% 12px 12px}
+.fl-a{width:54%;left:2%;top:6%;transform:rotate(-5deg)}
+.fl-b{width:46%;right:2%;top:26%;transform:rotate(4deg)}
+.fl-c{width:38%;left:24%;bottom:4%;transform:rotate(-2deg)}
+
+@media (prefers-reduced-motion:reduce){
+  .wb-hero3d__glow,.wb-hero3d__glitch{animation:none}
+}
