@@ -7,54 +7,86 @@
 <meta name="description" content="You found a wrong turn. We're good at those.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@500;600;700;800;900&family=Archivo:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Martian+Mono:wght@300;400;500;600&family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@500;600;700;800;900&family=Archivo:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Martian+Mono:wght@300;400;500;600&family=Anuphan:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@1,400&family=Chakra+Petch:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="base.css">
 <link rel="stylesheet" href="pages.css">
 <style>
-  /* pixel-dissolve cluster, echoing the logo's trailing edge */
-  .pixwrap{position:relative;display:inline-block}
-  .pixfield{position:absolute;top:0;right:-8%;bottom:0;width:48%;pointer-events:none;overflow:visible}
-  .pixfield i{position:absolute;display:block;background:var(--gold-bright);
-    box-shadow:0 0 8px rgba(240,180,41,.7);border-radius:1px;opacity:0;
-    animation:pixDrift var(--dur,3s) var(--ease) var(--del,0s) infinite}
-  @keyframes pixDrift{
-    0%{opacity:0;transform:translate(-10px,0) scale(1)}
-    12%{opacity:1}
-    70%{opacity:.7}
-    100%{opacity:0;transform:translate(var(--dx,40px),var(--dy,0)) scale(.4)}
-  }
+  /* ===== 404-TEST — cursor-reactive showpiece (page-specific) ============ */
+
+  /* terminal eyebrow */
   .route{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted);
-    margin-bottom:34px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    margin-bottom:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .route b{color:var(--gold-bright)}
-  @media (prefers-reduced-motion:reduce){.pixfield i{animation:none;opacity:.6}}
+  html[lang="th"] .route{font-family:var(--thai-ui);letter-spacing:.02em;font-size:.86rem}
+
+  /* the interactive 404 stage — a canvas the cursor distorts */
+  .stage404{position:relative;width:min(74vw,820px);height:clamp(150px,30vh,330px);
+    margin:10px auto 8px;touch-action:pan-y}
+  #g404{display:block;width:100%;height:100%;pointer-events:none}
+  .sr404{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  /* a faint hint that the number is interactive (hover devices only) */
+  .stage404__hint{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);
+    font-family:var(--mono);font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--faint);opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
+  @media (hover:hover) and (pointer:fine){.stage404:hover .stage404__hint{opacity:.0}}
+
+  /* centre the whole composition, but always clear the fixed nav with a
+     comfortable margin below the menu (flex beats grid-overflow here) */
+  .dead404{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding-top:clamp(140px,16vh,200px);padding-bottom:clamp(64px,9vh,110px)}
+  .dead404 .deadend__inner{width:100%}
+  .dead404 .soi-sign{margin-bottom:30px}
+  .dead404 h2{margin-top:8px}
+
+  /* buttons get a brief glitch-flicker on hover (additive to the template's
+     electric edge); no transform so it never fights the .btn lift */
+  @keyframes btn404Glitch{
+    0%,100%{opacity:1;filter:none}
+    20%{opacity:.5;filter:hue-rotate(-18deg) brightness(1.2)}
+    45%{opacity:.92}
+    70%{opacity:.42;filter:hue-rotate(10deg)}
+  }
+  .dead404 .btn:hover{animation:btn404Glitch .34s steps(2,end) 1}
+
+  @media (prefers-reduced-motion:reduce){
+    .dead404 .btn:hover{animation:none}
+  }
+  @media (max-width:560px){
+    .cta404{display:flex;flex-direction:column;gap:14px;width:100%;max-width:340px;margin-inline:auto}
+    .cta404 .btn{width:100%}
+  }
 </style>
 </head>
 <body data-page="404">
 
 <main>
-  <section class="deadend" data-screen-label="404">
+  <section class="deadend dead404" data-screen-label="404">
     <div class="deadend__sky"></div>
     <div class="deadend__inner">
+
       <p class="route rise">
-        <span data-th="กำลังหาเส้นทาง…" data-en="routing…">กำลังหาเส้นทาง…</span>
+        <span data-th="กำลังหาเส้นทาง…" data-en="searching for the route…">กำลังหาเส้นทาง…</span>
         <span data-th="ไม่พบที่อยู่…" data-en="address not found…">ไม่พบที่อยู่…</span>
         <b>404 → FOUND</b>
       </p>
 
-      <div class="pixwrap rise d1">
-        <span class="glitch404 flicker idle" data-text="404">404</span>
-        <span class="pixfield" id="pixfield"></span>
+      <div class="stage404 rise d1">
+        <canvas id="g404" aria-hidden="true"></canvas>
+        <span class="sr404">404</span>
+        <span class="stage404__hint">move closer</span>
       </div>
 
-      <div class="rise d2" style="margin-top:14px"><span class="soi-sign" data-th="ทางตันที่ใช่" data-en="A dead end. The right one.">ทางตันที่ใช่</span></div>
+      <div class="rise d2"><span class="soi-sign" data-th="ทางตันที่ใช่" data-en="the right dead end">ทางตันที่ใช่</span></div>
 
-      <h2 class="rise d2" data-th="คุณเจอทางที่เลี้ยวผิด" data-en="You found a wrong turn.">คุณเจอทางที่เลี้ยวผิด</h2>
-      <p class="rise d3" data-th="เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ" data-en="We're good at those. But this page doesn't exist — let's get you back to the main road.">เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ</p>
+      <h2 class="rise d2" data-th="คุณเจอทางที่เลี้ยวผิด" data-en="You took a wrong turn">คุณเจอทางที่เลี้ยวผิด</h2>
+      <p class="rise d3" data-th="เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ" data-en="We're good at this sort of thing — but this page doesn't exist. Let's get you back to the main road.">เราถนัดเรื่องพวกนี้ — แต่หน้านี้ไม่มีอยู่จริง กลับสู่ถนนใหญ่กันเถอะ</p>
 
-      <div class="rise d3" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+      <div class="cta404 rise d3" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
         <a class="btn btn--solid" href="index.html" data-th="กลับสู่ถนนใหญ่" data-en="Back to the main road">กลับสู่ถนนใหญ่</a>
-        <a class="btn btn--ghost live" href="work.html" style="--bw:1.5px;border-radius:8px" data-th="ดูผลงาน" data-en="See the work">ดูผลงาน</a>
+        <a class="btn btn--ghost live" href="work.html" style="--bw:1.5px;border-radius:8px" data-th="ดูผลงาน" data-en="View our work">ดูผลงาน</a>
       </div>
+
     </div>
   </section>
 </main>
@@ -62,26 +94,249 @@
 <script src="electric.js"></script>
 <script src="site.js"></script>
 <script>
-  // build the pixel-dissolve field (logo motif)
-  (function () {
-    const f = document.getElementById('pixfield');
-    if (!f) return;
-    const N = window.matchMedia('(max-width:760px)').matches ? 22 : 40;
-    for (let i = 0; i < N; i++) {
-      const s = document.createElement('i');
-      const sz = 4 + Math.random() * 12;
-      const left = Math.pow(Math.random(), 1.7) * 90;        // denser near the edge
-      const top = Math.random() * 100;
-      s.style.width = s.style.height = sz + 'px';
-      s.style.left = left + '%';
-      s.style.top = top + '%';
-      s.style.setProperty('--dx', (24 + Math.random() * 70) + 'px');
-      s.style.setProperty('--dy', ((Math.random() - .5) * 36) + 'px');
-      s.style.setProperty('--dur', (2.4 + Math.random() * 2.6) + 's');
-      s.style.setProperty('--del', (Math.random() * 3) + 's');
-      f.appendChild(s);
+/* ============================================================
+   404-TEST — cursor-reactive glitch number on a canvas.
+   Proximity drives: pixelation, gold-amber chromatic split,
+   horizontal slice/datamosh displacement, jitter, and a stream
+   of gold pixels shed toward the cursor. Idle => smooth reassemble
+   + occasional neon flicker. Touch/no-hover => ambient glitch loop.
+   prefers-reduced-motion => steady glow with a gentle pulse.
+   ============================================================ */
+(function () {
+  const cvs = document.getElementById('g404');
+  const stage = cvs && cvs.closest('.stage404');
+  if (!cvs || !stage) return;
+  const ctx = cvs.getContext('2d', { alpha: true });
+
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const HOVER = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const TEXT = '404';
+  const FONT = '800 $px "Archivo Expanded","Archivo",sans-serif';
+  const font = s => FONT.replace('$', s);
+
+  let DPR = Math.min(devicePixelRatio || 1, 2);
+  let W = 0, H = 0, fontPx = 0, cx = 0, cy = 0;
+
+  // low-res working buffer (re-sized per frame for the pixelation effect)
+  const lb = document.createElement('canvas');
+  const lbx = lb.getContext('2d');
+
+  // sampled glyph points (CSS coords) for the pixel-shedding particles
+  let glyphPts = [];
+
+  function fit() {
+    const r = stage.getBoundingClientRect();
+    W = Math.max(2, r.width); H = Math.max(2, r.height);
+    cvs.width = Math.round(W * DPR); cvs.height = Math.round(H * DPR);
+    cvs.style.width = W + 'px'; cvs.style.height = H + 'px';
+    cx = W / 2; cy = H / 2;
+
+    // fit "404" within the stage (with side + vertical breathing room)
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    let fs = H * 0.86;
+    ctx.font = font(fs);
+    const maxW = W * 0.84, tw = ctx.measureText(TEXT).width;
+    if (tw > maxW) fs *= maxW / tw;
+    fontPx = fs;
+
+    sampleGlyph();
+  }
+
+  // build a full-res mask of the glyph and sample its opaque pixels
+  function sampleGlyph() {
+    const mc = document.createElement('canvas');
+    mc.width = cvs.width; mc.height = cvs.height;
+    const mx = mc.getContext('2d');
+    mx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    mx.font = font(fontPx);
+    mx.textAlign = 'center'; mx.textBaseline = 'middle';
+    mx.fillStyle = '#fff';
+    mx.fillText(TEXT, cx, cy);
+    let data;
+    try { data = mx.getImageData(0, 0, mc.width, mc.height).data; }
+    catch (e) { glyphPts = []; return; }
+    const pts = [];
+    const step = Math.max(2, Math.round(3 * DPR));
+    for (let y = 0; y < mc.height; y += step) {
+      for (let x = 0; x < mc.width; x += step) {
+        if (data[(y * mc.width + x) * 4 + 3] > 150) pts.push({ x: x / DPR, y: y / DPR });
+      }
     }
-  })();
+    glyphPts = pts;
+  }
+
+  /* ---------- pixel-shedding particles ---------- */
+  const parts = [];
+  const MAX = HOVER ? 230 : 150;
+  let mx = 0, my = 0, haveMouse = false;     // cursor (client coords)
+  let ccx = 0, ccy = 0, rL = 0, rT = 0;       // stage centre + origin (client coords)
+
+  function shed(n, eff) {
+    if (!glyphPts.length) return;
+    const curMX = mx - rL, curMY = my - rT;     // cursor in canvas-local coords
+    for (let i = 0; i < n && parts.length < MAX; i++) {
+      const p = glyphPts[(Math.random() * glyphPts.length) | 0];
+      // outward from the glyph centre
+      const ao = Math.atan2(p.y - cy, p.x - cx);
+      let bx = 0, by = 0;
+      if (HOVER && haveMouse) {                  // bias the drift toward the cursor
+        const a2 = Math.atan2(curMY - p.y, curMX - p.x);
+        bx = Math.cos(a2); by = Math.sin(a2);
+      }
+      const sp = 0.6 + Math.random() * (1.4 + eff * 2.2);
+      parts.push({
+        x: p.x, y: p.y,
+        vx: Math.cos(ao) * sp * 0.55 + bx * sp * 0.8 + (Math.random() - .5) * .5,
+        vy: Math.sin(ao) * sp * 0.55 + by * sp * 0.8 + (Math.random() - .5) * .5,
+        life: 1, decay: 0.012 + Math.random() * 0.022, s: 2 + Math.random() * 5
+      });
+    }
+  }
+
+  /* ---------- slice / datamosh bands ---------- */
+  const NB = 11;
+  const slice = new Array(NB).fill(0);
+  let nextSlice = 0;
+  function updSlices(now) {
+    if (now < nextSlice) return;
+    nextSlice = now + 55 + Math.random() * 120;
+    for (let i = 0; i < NB; i++) slice[i] = Math.random() < 0.34 ? (Math.random() * 2 - 1) : 0;
+  }
+
+  /* ---------- intensity drivers ---------- */
+  let cur = 0;
+  function proximity() {
+    if (!HOVER || !haveMouse) return 0;
+    const dx = mx - ccx, dy = my - ccy;
+    const d = Math.hypot(dx, dy);
+    const R = W * 0.62 + 220;
+    return Math.max(0, Math.min(1, 1 - d / R));
+  }
+  // idle neon flicker
+  let nextFlick = 1600, flickEnd = 0;
+  function flicker(now) {
+    if (REDUCED) return 0;
+    if (now > nextFlick && cur < 0.16) { flickEnd = now + 230; nextFlick = now + 2400 + Math.random() * 4000; }
+    if (now < flickEnd) {
+      const t = (flickEnd - now) / 230;
+      return (Math.random() < 0.6 ? 0.75 : 0.18) * t;
+    }
+    return 0;
+  }
+  // touch / no-hover ambient glitch loop
+  let nextPulse = 1200, pulseEnd = 0;
+  function ambient(now) {
+    const base = 0.07 + 0.05 * (0.5 + 0.5 * Math.sin(now * 0.0012));
+    if (now > nextPulse) { pulseEnd = now + 320 + Math.random() * 320; nextPulse = now + 2200 + Math.random() * 2800; }
+    let pulse = 0;
+    if (now < pulseEnd) { const t = Math.min(1, (pulseEnd - now) / 480); pulse = (0.4 + Math.random() * 0.4) * t; }
+    return Math.min(1, base + pulse);
+  }
+
+  /* ---------- main loop ---------- */
+  let running = true, last = performance.now(), spawnAcc = 0;
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min(40, now - last); last = now;
+
+    const r = cvs.getBoundingClientRect();
+    rL = r.left; rT = r.top; ccx = r.left + r.width / 2; ccy = r.top + r.height / 2;
+
+    const target = REDUCED ? 0 : (HOVER ? proximity() : ambient(now));
+    cur += (target - cur) * 0.12;
+    updSlices(now);
+    const eff = REDUCED ? 0 : Math.min(1, Math.max(cur, flicker(now)));
+    const glow = 0.45 + 0.25 * Math.sin(now * 0.0019) + eff * 0.4;
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    /* soft bloom / halo (smooth, behind the core) */
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.font = font(fontPx);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(240,180,41,' + (0.45 + 0.35 * Math.max(0, glow)) + ')';
+    ctx.shadowBlur = 38 + 46 * Math.max(0, glow);
+    ctx.fillStyle = 'rgba(240,180,41,' + (0.10 + 0.06 * Math.max(0, glow)) + ')';
+    ctx.fillText(TEXT, cx, cy);
+    ctx.restore();
+
+    /* core — composed on the low-res buffer then upscaled (pixelation) */
+    const px = 1 + eff * 6;
+    const lbW = Math.max(4, Math.round(W / px));
+    const lbH = Math.max(4, Math.round(H / px));
+    if (lb.width !== lbW || lb.height !== lbH) { lb.width = lbW; lb.height = lbH; }
+    lbx.setTransform(1, 0, 0, 1, 0, 0);
+    lbx.clearRect(0, 0, lbW, lbH);
+    lbx.globalCompositeOperation = 'lighter';
+    const lfs = fontPx * (lbW / W);
+    lbx.font = font(lfs);
+    lbx.textAlign = 'center'; lbx.textBaseline = 'middle';
+    const lcx = lbW / 2, lcy = lbH / 2;
+    const ca = eff * lbW * 0.022;                       // chromatic offset (gold-amber)
+    lbx.fillStyle = 'rgba(255,216,119,0.96)';           // base gold (always)
+    lbx.fillText(TEXT, lcx, lcy);
+    if (eff > 0.004) {
+      lbx.fillStyle = 'rgba(255,138,40,' + (0.55 * eff) + ')';   // warm fringe
+      lbx.fillText(TEXT, lcx + ca, lcy + ca * 0.28);
+      lbx.fillStyle = 'rgba(255,238,176,' + (0.5 * eff) + ')';   // bright fringe
+      lbx.fillText(TEXT, lcx - ca, lcy - ca * 0.28);
+    }
+    lbx.globalCompositeOperation = 'source-over';
+
+    /* blit upscaled, with per-band horizontal slice offsets + global jitter */
+    ctx.imageSmoothingEnabled = false;
+    const jx = (Math.random() - .5) * eff * 11;
+    const jy = (Math.random() - .5) * eff * 6;
+    const bands = Math.min(NB, lbH);
+    for (let i = 0; i < bands; i++) {
+      const sy = Math.floor(i * lbH / bands);
+      const sh = Math.ceil(lbH / bands) + 1;
+      const dy = i * H / bands;
+      const dh = H / bands + 1;
+      const dx = jx + slice[i] * eff * 38;
+      ctx.drawImage(lb, 0, sy, lbW, sh, dx, dy + jy, W, dh);
+    }
+
+    /* shed pixels toward the cursor while distorting */
+    if (!REDUCED) {
+      spawnAcc += eff * eff * (HOVER ? 2.6 : 1.4) * (dt / 16);
+      if (spawnAcc >= 1) { shed(spawnAcc | 0, eff); spawnAcc -= (spawnAcc | 0); }
+    }
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.x += p.vx * (dt / 16); p.y += p.vy * (dt / 16);
+      p.vx *= 0.985; p.vy *= 0.985; p.life -= p.decay * (dt / 16);
+      if (p.life <= 0) { parts.splice(i, 1); continue; }
+      const a = Math.max(0, p.life);
+      ctx.globalAlpha = a * 0.3;                          // faint bloom square
+      ctx.fillStyle = '#f0b429';
+      ctx.fillRect(p.x - p.s, p.y - p.s, p.s * 2, p.s * 2);
+      ctx.globalAlpha = a;                                // core square
+      ctx.fillStyle = p.life > 0.6 ? '#ffe9a8' : '#ffd877';
+      ctx.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+    }
+    ctx.globalAlpha = 1;
+
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- events ---------- */
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; haveMouse = true; }, { passive: true });
+  addEventListener('mouseout', e => { if (!e.relatedTarget) haveMouse = false; }, { passive: true });
+  let rid; addEventListener('resize', () => { clearTimeout(rid); rid = setTimeout(() => { DPR = Math.min(devicePixelRatio || 1, 2); fit(); }, 140); }, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) running = false;
+    else if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
+  });
+
+  /* ---------- boot ---------- */
+  function boot() { fit(); running = true; requestAnimationFrame(frame); }
+  boot();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
 </script>
 </body>
 </html>

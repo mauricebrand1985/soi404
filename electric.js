@@ -13,13 +13,16 @@ window.__initElectric = function () {
   const cv = document.getElementById('fx-canvas');
   if (!cv) return;
   const ctx = cv.getContext('2d', { alpha: true });
+  // spark bursts render to a separate canvas stacked ABOVE the chrome
+  const cvTop = document.getElementById('fx-canvas-top');
+  const ctxTop = cvTop ? cvTop.getContext('2d', { alpha: true }) : ctx;
   let W = 0, H = 0, DPR = Math.min(devicePixelRatio || 1, 2);
 
   // theme-aware palette so the circuit current reads on white pages too
   const LIGHT = document.body.dataset.theme === 'light';
   const C = LIGHT ? {
-    trace: '150,106,14', tA0: .16, tA1: .12, pulse: '150,106,14',
-    headIn: 'rgba(150,106,14,.95)', headMid: 'rgba(168,120,20,.5)', headOut: 'rgba(150,106,14,0)',
+    trace: '124,84,8', tA0: .26, tA1: .16, pulse: '150,106,14',
+    headIn: 'rgba(124,84,8,.98)', headMid: 'rgba(168,120,20,.6)', headOut: 'rgba(150,106,14,0)',
     sparkHot: '#7a5408', sparkWarm: '#9a6e10'
   } : {
     trace: '240,180,41', tA0: .05, tA1: .06, pulse: '240,184,55',
@@ -32,6 +35,11 @@ window.__initElectric = function () {
     cv.width = W * DPR; cv.height = H * DPR;
     cv.style.width = W + 'px'; cv.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    if (cvTop && cvTop !== cv) {
+      cvTop.width = W * DPR; cvTop.height = H * DPR;
+      cvTop.style.width = W + 'px'; cvTop.style.height = H + 'px';
+      ctxTop.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
   }
   resize();
   addEventListener('resize', resize, { passive: true });
@@ -145,6 +153,7 @@ window.__initElectric = function () {
     if (paused) return;
     const dt = Math.min(40, now - last); last = now;
     ctx.clearRect(0, 0, W, H);
+    if (ctxTop !== ctx) ctxTop.clearRect(0, 0, W, H);
     intensity *= .96;
 
     // faint static traces
@@ -199,16 +208,16 @@ window.__initElectric = function () {
       b.forks.forEach(f => draw(f, .6));
     }
 
-    // sparks
+    // sparks — drawn on the TOP canvas so they read over buttons/nav/fab
     for (let i = sparks.length - 1; i >= 0; i--) {
       const s = sparks[i];
       s.vy += .12; s.x += s.vx * (dt / 16); s.y += s.vy * (dt / 16); s.life -= s.decay * (dt / 16);
       if (s.life <= 0) { sparks.splice(i, 1); continue; }
-      ctx.globalAlpha = Math.max(0, s.life);
-      ctx.fillStyle = s.cold ? '#bfe6ff' : (s.life > .6 ? C.sparkHot : C.sparkWarm);
-      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+      ctxTop.globalAlpha = Math.max(0, s.life);
+      ctxTop.fillStyle = s.cold ? '#bfe6ff' : (s.life > .6 ? C.sparkHot : C.sparkWarm);
+      ctxTop.beginPath(); ctxTop.arc(s.x, s.y, s.r, 0, 7); ctxTop.fill();
     }
-    ctx.globalAlpha = 1;
+    ctxTop.globalAlpha = 1;
 
     requestAnimationFrame(frame);
   }

@@ -23,9 +23,9 @@
 .hero__eyebrow{margin-bottom:26px}
 .hero h1{font-family:var(--display);font-weight:800;line-height:.95;letter-spacing:-.015em;
   font-size:clamp(2.7rem,6.6vw,6.1rem);max-width:16ch;font-stretch:expanded}
-html[lang="th"] .hero h1{line-height:1.16;letter-spacing:-.01em;font-size:clamp(3.4rem,8.2vw,7.4rem)}
-.hero h1 .em{color:var(--gold-bright);text-shadow:0 0 30px rgba(240,180,41,.4)}
-.hero__sub{margin-top:26px;max-width:42ch;color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.18rem)}
+html[lang="th"] .hero h1{line-height:1.16;letter-spacing:-.01em;font-size:clamp(2.75rem,6.64vw,5.99rem);font-weight:700;text-shadow:0 0 18px rgba(240,180,41,.35),0 0 42px rgba(240,180,41,.18)}
+.hero h1 .em{color:var(--gold-bright);font-style:italic;text-shadow:0 0 30px rgba(240,180,41,.4);line-height:.82}
+.hero__sub{margin-top:40px;max-width:42ch;color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.18rem)}
 html[lang="th"] .hero__sub{font-size:clamp(1.35rem,2vw,1.9rem);max-width:36ch}
 .hero__concept{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);margin-bottom:8px}
@@ -50,7 +50,75 @@ html[lang="th"] .hero__stat span{font-family:var(--thai);letter-spacing:.01em;fo
 .head h2{font-family:var(--display);font-weight:800;line-height:.98;letter-spacing:-.01em;
   font-size:clamp(2.4rem,6vw,5rem);font-stretch:expanded}
 .head h2 .it{font-style:italic;font-weight:500;color:var(--gold-bright);font-stretch:normal}
+/* gold accent words across the site — light, slightly-condensed Playfair italic, underlined */
+.hero h1 .em, .head h2 .it, .head h2 .em, .gold-ink,
+.f-seen, .f-remembered, .f-disc, .f-turn{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-weight:400;
+  font-stretch:normal;
+  letter-spacing:-.03em;
+  text-decoration:none;
+  padding-bottom:.22em;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='16' viewBox='0 0 96 16'%3E%3Cdefs%3E%3Cfilter id='g' x='-10%25' y='-60%25' width='120%25' height='220%25'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M0 8 Q24 4.5 48 8 T96 8' fill='none' stroke='%23ffd877' stroke-width='1.8' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M0 8 Q24 4.5 48 8 T96 8' fill='none' stroke='%23ffe9a8' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;
+  background-position:left bottom;
+  background-size:3em .56em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+/* CTA "right turn" — keep it clean, no wavy underline */
+.gold-ink, .f-turn{background-image:none;padding-bottom:0}
+/* Thai mode: swap the Latin serif for a Thai display face (Playfair has no Thai).
+   EXPERIMENT — each accent word shows a different candidate; pick one. */
+html[lang="th"] .hero h1 .em,
+html[lang="th"] .head h2 .it,
+html[lang="th"] .head h2 .em,
+html[lang="th"] .gold-ink,
+html[lang="th"] .f-seen, html[lang="th"] .f-remembered,
+html[lang="th"] .f-disc, html[lang="th"] .f-turn{
+  font-family:"IBM Plex Sans Thai",sans-serif;
+  font-style:normal;
+  font-weight:300;
+  letter-spacing:0;
+  text-decoration:none;
+}
+/* Thai: no wavy underline */
+html[lang="th"] .hero h1 .em, html[lang="th"] .head h2 .it,
+html[lang="th"] .head h2 .em, html[lang="th"] .gold-ink,
+html[lang="th"] .f-seen, html[lang="th"] .f-remembered,
+html[lang="th"] .f-disc, html[lang="th"] .f-turn{background-image:none;padding-bottom:0}
 html[lang="th"] .head h2{line-height:1.18}
+/* Thai-only: four specific page headings run 50% larger (English unchanged) */
+html[lang="th"] .head h2.th-xl{font-size:clamp(3.6rem,9vw,7.5rem)}
+/* Thai hero: reverse the weights — white runs light (400, see above), gold accent
+   words run bold to match the .display CTA words "มาเลี้ยว / ด้วยกัน" (both clamp
+   to 700, the heaviest IBM Plex Sans Thai weight). Placed after the grouped accent
+   rule above so it wins the cascade. */
+html[lang="th"] .hero h1 .em{font-weight:700}
+/* Thai section-heading accent words ("หนึ่งทีม", etc.) match the heading weight
+   (700) and font instead of the thin 300 — e.g. "สี่ศาสตร์ หนึ่งทีม" reads as one
+   consistent weight on both the homepage and services page. */
+html[lang="th"] .head h2 .it, html[lang="th"] .head h2 .em{font-weight:700}
+/* ── Homepage Thai headings: BOLDER-THAN-700 workaround ───────────────────
+   IBM Plex Sans Thai ships nothing heavier than 700, so raising font-weight
+   alone can't make headings thicker. We hold weight 700 and add a matching
+   text-stroke (self-coloured via currentColor) to physically fatten every
+   glyph; paint-order keeps the fill + neon glow clean on top. Scoped to the
+   homepage only. */
+html[lang="th"] body[data-page="home"] .hero h1,
+html[lang="th"] body[data-page="home"] .head h2,
+html[lang="th"] body[data-page="home"] h2.display{
+  font-weight:700;
+  -webkit-text-stroke:1.1px currentColor;
+  paint-order:stroke fill;
+}
+html[lang="th"] body[data-page="home"] .hero h1 .em,
+html[lang="th"] body[data-page="home"] .head h2 .it,
+html[lang="th"] body[data-page="home"] .head h2 .em,
+html[lang="th"] body[data-page="home"] h2.display .gold-ink,
+html[lang="th"] body[data-page="home"] h2.display .f-turn{
+  -webkit-text-stroke:1.1px currentColor;
+}
 .head p{margin-top:20px;max-width:50ch;color:var(--muted);font-size:1.05rem}
 
 /* mini home strips reusing other sections (services / work preview) */
@@ -58,7 +126,9 @@ html[lang="th"] .head h2{line-height:1.18}
 @media (max-width:760px){.preview-grid{grid-template-columns:1fr}}
 
 /* ===== SERVICES ============================================= */
-.services{background:var(--bg-soft)}
+/* page tint lives on the body (behind #fx-canvas) so the electric current shows
+   through — main MUST stay transparent or it covers the z-index:1 canvas */
+.services{background:transparent}
 .disc-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media (max-width:820px){.disc-grid{grid-template-columns:1fr}}
 
@@ -83,7 +153,7 @@ html[lang="th"] .head h2{line-height:1.18}
 .svc-card{position:relative;border-radius:24px;padding:clamp(28px,3.4vw,46px);overflow:hidden;--cop:.55;--bw:1.5px;
   background:linear-gradient(180deg,#ffffff,rgba(255,255,255,.5));box-shadow:0 26px 64px rgba(40,30,10,.09)}
 .svc-card:hover{--cop:1}
-.svc-card__num{position:absolute;top:14px;left:clamp(26px,3.4vw,42px);font-family:var(--mono);font-weight:700;line-height:1;
+.svc-card__num{position:absolute;top:26px;left:clamp(26px,3.4vw,42px);font-family:var(--mono);font-weight:700;line-height:1;
   font-size:clamp(2.8rem,5vw,4.4rem);color:transparent;-webkit-text-stroke:1.5px rgba(154,110,16,.22)}
 .svc-card__dots{position:absolute;top:24px;right:26px;width:84px;height:54px;opacity:.6;
   background-image:radial-gradient(rgba(154,110,16,.45) 1.5px,transparent 1.6px);background-size:12px 12px}
@@ -107,6 +177,8 @@ html[lang="th"] .svc-card h3{font-family:var(--thai)}
   background:rgba(255,255,255,.05);padding:.35em .9em;border-radius:20px}
 .browser__screen{aspect-ratio:16/10;position:relative;overflow:hidden;
   background:radial-gradient(120% 90% at 80% 10%,rgba(240,180,41,.14),transparent 55%),linear-gradient(160deg,#16130e,#0a0807)}
+.browser__screen--img{display:block}
+.browser__screen--img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
 .mk{position:absolute}
 .mk-nav{top:18px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:center}
 .mk-logo{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(--gold-bright)}
@@ -125,13 +197,25 @@ html[lang="th"] .svc-card h3{font-family:var(--thai)}
 /* features strip */
 .feat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:clamp(56px,9vh,110px);
   padding-top:clamp(36px,5vh,56px);border-top:1px solid var(--line-soft)}
-.feat{display:flex;gap:14px;align-items:flex-start}
-.feat__ic{flex-shrink:0;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--gold);
+.feat{display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:clamp(20px,3vh,30px);
+  align-items:center;padding:clamp(22px,2.2vw,30px);border-radius:20px;
+  box-shadow:inset 0 0 0 1px var(--line-soft)}
+.feat__ic{align-self:start;width:56px;height:56px;border-radius:15px;display:grid;place-items:center;
   box-shadow:inset 0 0 0 1.5px var(--line)}
-.feat__ic svg{width:22px;height:22px}
-.feat b{display:block;font-family:var(--display);font-weight:700;font-size:1.05rem;margin-bottom:3px}
+.feat .feat__ic{color:var(--gold)}            /* keep the icon gold (beats .feat span) */
+.feat__ic svg{width:26px;height:26px}
+.feat b{display:block;font-family:var(--display);font-weight:700;font-size:1.1rem;line-height:1.2;
+  margin-bottom:4px;color:var(--ink)}
 html[lang="th"] .feat b{font-family:var(--thai)}
-.feat span{color:var(--muted);font-size:.92rem}
+.feat span{color:var(--muted);font-size:.95rem;line-height:1.35}
+/* gold dash accent, bottom-left of each card — fades out to the right */
+.feat::after{content:"";grid-column:1 / -1;align-self:end;width:159px;max-width:100%;height:2.5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--gold-bright),transparent)}
+/* light services page: each feature sits in a soft white card with an outlined icon tile */
+body[data-theme="light"] .feat{background:linear-gradient(180deg,#fffdf9,#faf6ee);
+  box-shadow:0 8px 24px rgba(40,30,10,.06),inset 0 0 0 1px var(--line-soft)}
+body[data-theme="light"] .feat__ic{background:rgba(255,255,255,.6);
+  box-shadow:inset 0 0 0 1.5px var(--line-soft)}
 @media (max-width:780px){.feat-strip{grid-template-columns:1fr 1fr;gap:28px 20px}}
 @media (max-width:460px){.feat-strip{grid-template-columns:1fr}}
 
@@ -193,8 +277,9 @@ html[lang="th"] .disc h3{font-family:var(--thai)}
   .proj{width:45%;max-width:none}
   .proj:nth-child(odd){margin-right:auto;margin-left:0}
   .proj:nth-child(even){margin-left:auto;margin-right:0}
-  /* pull each project up so it begins ~70% down the previous image */
-  .proj:not(:first-child){margin-top:-21%}
+  /* pull each project up so it begins partway down the previous image,
+     but keep a comfortable vertical gap between them */
+  .proj:not(:first-child){margin-top:-14%}
 }
 .proj__frame{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;
   --cop:.3;transition:transform .6s var(--ease)}
@@ -305,3 +390,45 @@ html[lang="th"] .cbtn span{font-family:var(--thai-ui);letter-spacing:0;font-size
 html[lang="th"] .deadend h2{font-family:var(--thai)}
 .deadend p{color:var(--muted);max-width:46ch;margin:0 auto 36px}
 .deadend .soi-sign{margin-bottom:34px}
+
+/* ===== PIXEL-SHED accent words (shared) ====================
+   Any inline element tagged .pixword sheds small gold blocks that
+   float right — the motif from the 404 number. Fields are built by
+   pixwords.js (which also re-injects when the i18n rebuilds a heading). */
+.pixspray{position:absolute;top:-14%;bottom:-14%;left:46%;right:-22%;
+  pointer-events:none;overflow:visible;z-index:1}
+.pixspray i{position:absolute;display:block;background:var(--gold-bright);
+  box-shadow:0 0 6px rgba(240,180,41,.7);border-radius:1px;opacity:0;
+  animation:pixDrift var(--dur,3s) var(--ease) var(--del,0s) infinite}
+@keyframes pixDrift{
+  0%{opacity:0;transform:translate(-8px,0) scale(1)}
+  12%{opacity:1}
+  70%{opacity:.65}
+  100%{opacity:0;transform:translate(var(--dx,32px),var(--dy,0)) scale(.42)}
+}
+@media (prefers-reduced-motion:reduce){.pixspray i{animation:none;opacity:.5}}
+
+/* ===== NAV LOGO GLITCH (site-wide) =========================
+   Clean ~14s, then a hard 1s gold-amber glitch burst driven by site.js,
+   which re-randomizes these custom props rapidly for an erratic stutter:
+   chromatic red/cyan fringing (drop-shadow on the img) + jitter + brightness
+   flicker, plus two clipped image copies that jump as datamosh slice bands.
+   The copies always source the GOLD logo so they can be hue-tinted on either
+   theme; blend is screen on dark pages, multiply on the white ones. Pure
+   transform/opacity/filter/clip-path → the navbar never reflows. */
+.nav__logo{position:relative}
+.nav__logo img{position:relative;z-index:1;
+  transform:translate(var(--gx,0),var(--gy,0));filter:var(--gf,none);will-change:transform,filter}
+.nav__logo::before,.nav__logo::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:url('logo-sign.png') center/contain no-repeat;
+  mix-blend-mode:var(--logo-blend,screen);will-change:opacity,clip-path,transform}
+.nav__logo::before{filter:sepia(1) saturate(7) hue-rotate(-35deg) brightness(1.25);
+  opacity:var(--sa-op,0);clip-path:var(--sa-clip,inset(50% 0 50% 0));transform:translateX(var(--sa-x,0))}
+.nav__logo::after{filter:sepia(1) saturate(6) hue-rotate(155deg) brightness(1.2);
+  opacity:var(--sb-op,0);clip-path:var(--sb-clip,inset(50% 0 50% 0));transform:translateX(var(--sb-x,0))}
+body[data-theme="light"]{--logo-blend:multiply}
+@media (prefers-reduced-motion:reduce){
+  .nav__logo img{filter:none!important;transform:none!important}
+  .nav__logo::before,.nav__logo::after{opacity:0!important}
+}

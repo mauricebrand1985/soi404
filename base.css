@@ -39,7 +39,7 @@
   /* type */
   --display: "Archivo Expanded","Archivo",sans-serif;
   --thai:    "IBM Plex Sans Thai","IBM Plex Sans",sans-serif;
-  --thai-ui: "Anuphan","IBM Plex Sans Thai",sans-serif;   /* modern Thai for labels/UI */
+  --thai-ui: "IBM Plex Sans Thai","IBM Plex Sans",sans-serif;   /* unified: all Thai uses IBM Plex Sans Thai */
   --mono:    "Martian Mono",ui-monospace,monospace;
   --body:    "Archivo","IBM Plex Sans Thai",sans-serif;
 
@@ -89,8 +89,18 @@ ul{margin:0;padding:0;list-style:none}
 }
 .atmos__vign{position:absolute;inset:0;
   background:radial-gradient(120% 90% at 50% 0%,transparent 40%,rgba(0,0,0,.55) 100%);}
-/* shared full-screen electric canvas — above content so sparks/current read on top */
-#fx-canvas{position:fixed;inset:0;z-index:33;pointer-events:none}
+/* shared full-screen electric canvas — AMBIENT layer (circuit traces, traveling
+   current dots, sky lightning). Sits BELOW the whole content layer (main is
+   z-index:2) so the motion only ever reads BETWEEN the page background and the
+   content — never over photos, cards or text — on both the dark and white
+   templates. Visibility on white comes from the brighter light palette in
+   electric.js, NOT from raising this above content. Spark bursts live on the
+   separate #fx-canvas-top layer above the chrome. */
+#fx-canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
+/* spark-burst layer ONLY — above all chrome (nav z40, drawer z39, fab z38) so
+   button discharges read on top of every button, including the menu
+   "Start a project" button and the bottom-right contact stack */
+#fx-canvas-top{position:fixed;inset:0;z-index:45;pointer-events:none}
 
 /* ----- LAYOUT PRIMITIVES ------------------------------------ */
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
@@ -229,7 +239,8 @@ html[lang="th"] .playlink{font-family:var(--thai);letter-spacing:.02em;font-size
   backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);
   transition:padding .4s var(--ease),background .4s}
 .nav__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;
-  width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+  width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter);
+  transform:translateY(10px)}
 .nav.shrink{padding-block:6px;background:linear-gradient(180deg,rgba(8,6,9,.92),rgba(8,6,9,.7))}
 .nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
   background:linear-gradient(90deg,transparent,var(--line) 12%,var(--line) 88%,transparent);
@@ -238,12 +249,12 @@ html[lang="th"] .playlink{font-family:var(--thai);letter-spacing:.02em;font-size
   background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);
   filter:drop-shadow(0 0 6px var(--gold));animation:railRun 7s linear infinite}
 @keyframes railRun{0%{transform:translateX(-40%)}100%{transform:translateX(360%)}}
-.nav__logo{display:flex;align-items:center;height:130px}
+.nav__logo{display:flex;align-items:center;height:130px;transform:translate(-13px,1px)}
 .nav__logo img{height:100%;width:auto}
 .nav__links{display:flex;align-items:center;gap:clamp(16px,2.2vw,38px)}
-.nav__links a{font-family:var(--mono);font-size:.92rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+.nav__links a{font-family:var(--mono);font-size:calc(.92rem - 2px);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
   color:var(--ink-soft);position:relative;padding:6px 0;transition:color .3s}
-html[lang="th"] .nav__links a{font-family:var(--thai-ui);letter-spacing:.01em;font-size:1.16rem}
+html[lang="th"] .nav__links a{font-family:var(--thai-ui);letter-spacing:.01em;font-size:calc(1.16rem - 2px)}
 .nav__links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:0;
   background:var(--gold-bright);box-shadow:0 0 8px var(--gold);transition:width .35s var(--ease)}
 .nav__links a:hover,.nav__links a[aria-current]{color:var(--gold-bright)}
@@ -322,8 +333,8 @@ html[lang="th"] .fab__btn .tip{font-family:var(--thai-ui);font-size:.86rem;lette
   background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);
   filter:drop-shadow(0 0 6px var(--gold));animation:railRun 11s linear infinite}
 .foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
-.foot__brand img{height:118px;margin-bottom:18px}
-.foot__tag{color:var(--muted);max-width:32ch}
+.foot__brand img{height:118px;margin-bottom:18px;transform:translateX(-12px)}
+.foot__tag{color:var(--muted);max-width:32ch;white-space:pre-line}
 .foot h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--faint);margin-bottom:16px}
 html[lang="th"] .foot h4{font-family:var(--thai-ui);font-size:1rem;letter-spacing:.03em;text-transform:none}
