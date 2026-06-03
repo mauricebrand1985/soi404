@@ -29,7 +29,7 @@
   .stage404__hint{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);
     font-family:var(--mono);font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;
     color:var(--faint);opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
-  @media (hover:hover) and (pointer:fine){.stage404:hover .stage404__hint{opacity:.0}}
+  @media (hover:hover){@media (hover:hover) and (pointer:fine){.stage404:hover .stage404__hint{opacity:.0}}}
 
   /* centre the whole composition, but always clear the fixed nav with a
      comfortable margin below the menu (flex beats grid-overflow here) */
@@ -47,7 +47,7 @@
     45%{opacity:.92}
     70%{opacity:.42;filter:hue-rotate(10deg)}
   }
-  .dead404 .btn:hover{animation:btn404Glitch .34s steps(2,end) 1}
+  @media (hover:hover){.dead404 .btn:hover{animation:btn404Glitch .34s steps(2,end) 1}}
 
   @media (prefers-reduced-motion:reduce){
     .dead404 .btn:hover{animation:none}

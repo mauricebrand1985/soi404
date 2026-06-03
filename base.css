@@ -147,7 +147,7 @@ html[lang="th"] .eyebrow{font-family:var(--thai-ui);letter-spacing:.05em;font-si
 .live::after{content:"";position:absolute;inset:0;border-radius:inherit;
   box-shadow:inset 0 0 0 1px var(--line);pointer-events:none}
 @keyframes current{to{--ang:360deg}}
-.live:hover{--cspeed:2.4s;--cop:1}
+@media (hover:hover){.live:hover{--cspeed:2.4s;--cop:1}}
 
 /* neon flicker-on then idle buzz */
 .neon{text-shadow:0 0 18px rgba(240,180,41,.35),0 0 42px rgba(240,180,41,.18)}
@@ -194,14 +194,14 @@ html[lang="th"] .soi-sign{font-family:var(--thai-ui);letter-spacing:.02em;font-s
   transition:transform .35s var(--ease),color .3s,background .3s}
 .btn .ar{transition:transform .35s var(--ease)}
 .btn svg{width:1.1em;height:1.1em;flex-shrink:0}
-.btn:hover{transform:translateY(-2px)}
-.btn:hover .ar{transform:translate(3px,-3px)}
+@media (hover:hover){.btn:hover{transform:translateY(-2px)}}
+@media (hover:hover){.btn:hover .ar{transform:translate(3px,-3px)}}
 .btn--ghost{--bw:1.5px}
 .btn--solid{background:linear-gradient(180deg,var(--gold-bright),var(--gold));
   color:#241804;font-weight:600;box-shadow:0 6px 26px rgba(240,180,41,.28)}
-.btn--solid:hover{box-shadow:0 10px 36px rgba(240,180,41,.42)}
+@media (hover:hover){.btn--solid:hover{box-shadow:0 10px 36px rgba(240,180,41,.42)}}
 .btn--white{background:#fff;color:#15110c;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.25)}
-.btn--white:hover{background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.32)}
+@media (hover:hover){.btn--white:hover{background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.32)}}
 html[lang="th"] .btn{font-family:var(--thai-ui);letter-spacing:.02em;font-size:.86rem}
 /* nav CTA: lock width to the English label so Thai never wraps */
 .nav__right .btn--ghost{min-width:184px}
@@ -225,11 +225,11 @@ html[lang="th"] .nav__right .btn--ghost{font-size:.92rem}
 .playlink .disc svg{position:relative;width:22px;height:22px;color:var(--gold-bright);margin-left:3px;
   filter:drop-shadow(0 0 6px rgba(240,180,41,.6))}
 @keyframes spin{to{transform:rotate(360deg)}}
-.playlink:hover .disc{box-shadow:inset 0 0 0 1px var(--gold),0 0 40px rgba(240,180,41,.4);transform:scale(1.07)}
+@media (hover:hover){.playlink:hover .disc{box-shadow:inset 0 0 0 1px var(--gold),0 0 40px rgba(240,180,41,.4);transform:scale(1.07)}}
 @media (prefers-reduced-motion:reduce){.playlink .disc::before{animation:none;--ang:300deg}.playlink .disc::after{animation:none}}
 .playlink u{text-decoration:none;background-image:linear-gradient(var(--gold),var(--gold));
   background-size:0% 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--ease)}
-.playlink:hover u{background-size:100% 1px}
+@media (hover:hover){.playlink:hover u{background-size:100% 1px}}
 html[lang="th"] .playlink{font-family:var(--thai);letter-spacing:.02em;font-size:.86rem}
 
 /* ----- NAV --------------------------------------------------- */
@@ -257,8 +257,10 @@ html[lang="th"] .playlink{font-family:var(--thai);letter-spacing:.02em;font-size
 html[lang="th"] .nav__links a{font-family:var(--thai-ui);letter-spacing:.01em;font-size:calc(1.16rem - 2px)}
 .nav__links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:0;
   background:var(--gold-bright);box-shadow:0 0 8px var(--gold);transition:width .35s var(--ease)}
-.nav__links a:hover,.nav__links a[aria-current]{color:var(--gold-bright)}
-.nav__links a:hover::after,.nav__links a[aria-current]::after{width:100%}
+.nav__links a[aria-current]{color:var(--gold-bright)}
+@media (hover:hover){.nav__links a:hover{color:var(--gold-bright)}}
+.nav__links a[aria-current]::after{width:100%}
+@media (hover:hover){.nav__links a:hover::after{width:100%}}
 .nav__right{display:flex;align-items:center;gap:18px}
 .lang{display:inline-flex;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;
   border-radius:6px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
@@ -300,7 +302,7 @@ html[lang="th"] .drawer a{font-family:var(--thai)}
 .fab__btn svg{width:24px;height:24px;color:var(--gold-bright);filter:drop-shadow(0 0 6px rgba(240,180,41,.4))}
 .fab__btn:nth-child(2)::before{animation-delay:-1.3s}
 .fab__btn:nth-child(3)::before{animation-delay:-2.6s}
-.fab__btn:hover{transform:scale(1.09);box-shadow:0 12px 40px rgba(240,180,41,.3),inset 0 0 0 1px rgba(240,180,41,.3)}
+@media (hover:hover){.fab__btn:hover{transform:scale(1.09);box-shadow:0 12px 40px rgba(240,180,41,.3),inset 0 0 0 1px rgba(240,180,41,.3)}}
 .fab__btn .tip{position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(6px);
   white-space:nowrap;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--gold-bright);background:var(--bg-glass);padding:.5em .8em;border-radius:6px;
@@ -339,7 +341,7 @@ html[lang="th"] .fab__btn .tip{font-family:var(--thai-ui);font-size:.86rem;lette
   color:var(--faint);margin-bottom:16px}
 html[lang="th"] .foot h4{font-family:var(--thai-ui);font-size:1rem;letter-spacing:.03em;text-transform:none}
 .foot__col a{display:block;color:var(--ink-soft);padding:5px 0;transition:color .25s,padding-left .25s}
-.foot__col a:hover{color:var(--gold-bright);padding-left:6px}
+@media (hover:hover){.foot__col a:hover{color:var(--gold-bright);padding-left:6px}}
 .foot__bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   margin-top:48px;padding-top:22px;border-top:1px solid var(--line-soft);
   font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--faint)}

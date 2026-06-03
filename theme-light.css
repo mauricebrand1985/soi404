@@ -58,12 +58,12 @@ body[data-theme="light"] .disc,
 body[data-theme="light"] .acard{
   background:linear-gradient(180deg,#ffffff,rgba(255,255,255,.55));
   --cop:.7;box-shadow:0 10px 30px rgba(40,30,10,.06)}
-body[data-theme="light"] .disc:hover,
-body[data-theme="light"] .acard:hover{--cop:1;box-shadow:0 16px 44px rgba(40,30,10,.1)}
+@media (hover:hover){body[data-theme="light"] .disc:hover,
+body[data-theme="light"] .acard:hover{--cop:1;box-shadow:0 16px 44px rgba(40,30,10,.1)}}
 body[data-theme="light"] .disc__bg{
   background:radial-gradient(80% 80% at 80% 0%,rgba(154,110,16,.09),transparent 60%)}
 body[data-theme="light"] .disc__num{-webkit-text-stroke-color:rgba(154,110,16,.26)}
-body[data-theme="light"] .disc:hover .disc__num{-webkit-text-stroke-color:rgba(154,110,16,.5)}
+@media (hover:hover){body[data-theme="light"] .disc:hover .disc__num{-webkit-text-stroke-color:rgba(154,110,16,.5)}}
 body[data-theme="light"] .soi-num{-webkit-text-stroke-color:rgba(154,110,16,.32)}
 body[data-theme="light"] .acard--ph{
   background:repeating-linear-gradient(135deg,rgba(154,110,16,.09) 0 12px,transparent 12px 24px),
@@ -80,14 +80,14 @@ body[data-theme="light"] .fab__btn{
     inset 0 1px 0 rgba(255,255,255,.96),
     inset 0 0 0 1px rgba(154,110,16,.14),
     inset 0 -9px 18px -12px rgba(154,110,16,.22);}
-body[data-theme="light"] .fab__btn:hover{
+@media (hover:hover){body[data-theme="light"] .fab__btn:hover{
   box-shadow:
     0 2px 4px rgba(40,30,10,.12),
     0 10px 24px -6px rgba(60,44,12,.22),
     0 30px 58px -14px rgba(154,110,16,.34),
     inset 0 1px 0 rgba(255,255,255,.96),
     inset 0 0 0 1px rgba(154,110,16,.28),
-    inset 0 -9px 18px -12px rgba(154,110,16,.28);}
+    inset 0 -9px 18px -12px rgba(154,110,16,.28);}}
 body[data-theme="light"] .fab__btn .tip{background:rgba(255,253,248,.94);color:var(--gold)}
 /* flat gold icons — no glow */
 body[data-theme="light"] .fab__btn svg{color:var(--gold-bright);filter:none;}
@@ -99,7 +99,7 @@ body[data-theme="light"] .foot__brand img{filter:none;transform:translateX(-9px)
 body[data-theme="light"] .btn--solid{
   background:linear-gradient(180deg,#ffd877,#f0b429);color:#241804;
   box-shadow:0 8px 24px rgba(240,180,41,.34)}
-body[data-theme="light"] .btn--solid:hover{box-shadow:0 12px 32px rgba(240,180,41,.46)}
+@media (hover:hover){body[data-theme="light"] .btn--solid:hover{box-shadow:0 12px 32px rgba(240,180,41,.46)}}
 
 /* wavy accent underline tuned to the deeper light-theme gold */
 body[data-theme="light"] .hero h1 .em, body[data-theme="light"] .head h2 .it,
