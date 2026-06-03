@@ -162,18 +162,28 @@
     // electric discharges on buttons (attach regardless of SOI init order;
     // each handler checks window.SOI at call time)
     if (!REDUCED) {
+      // Hover sparks ONLY on devices that truly hover (mouse / trackpad).
+      // On a touchscreen, the first tap fires a synthetic `mouseenter`; drawing
+      // sparks inside it mutates the page, so iOS Safari reads the tap as
+      // "revealing a hover state" and SWALLOWS the click — forcing a second tap
+      // before any link/button navigates. Gating on `(hover: hover)` keeps the
+      // effect on desktop while letting a single tap activate links on mobile.
+      const HOVER = matchMedia('(hover: hover)').matches;
+
       // every button: spark bursts along its edges on hover (visible on any bg)
       document.querySelectorAll('.btn,.cbtn').forEach(b => {
-        b.addEventListener('mouseenter', () => {
+        if (HOVER) b.addEventListener('mouseenter', () => {
           if (!window.SOI) return;
           const r = b.getBoundingClientRect();
           window.SOI.spark(r.left + 7, r.top + r.height / 2, { count: 9, power: 4 });
           window.SOI.spark(r.right - 7, r.top + r.height / 2, { count: 9, power: 4 });
           window.SOI.spark(r.left + r.width / 2, r.top + 5, { count: 7, power: 4 });
         });
+        // click discharge stays on every device — it fires on the tap that
+        // navigates, so it never blocks the first tap.
         b.addEventListener('click', () => window.SOI && window.SOI.sparkEl(b, { count: 22, power: 6 }));
       });
-      document.querySelectorAll('.fab__btn,.playlink,.disc,.proj').forEach(b => {
+      if (HOVER) document.querySelectorAll('.fab__btn,.playlink,.disc,.proj').forEach(b => {
         b.addEventListener('mouseenter', () => window.SOI && window.SOI.sparkEl(b, { count: 8, power: 3 }));
       });
     }

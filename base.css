@@ -306,7 +306,7 @@ html[lang="th"] .drawer a{font-family:var(--thai)}
   color:var(--gold-bright);background:var(--bg-glass);padding:.5em .8em;border-radius:6px;
   box-shadow:inset 0 0 0 1px var(--line);opacity:0;pointer-events:none;transition:.3s}
 html[lang="th"] .fab__btn .tip{font-family:var(--thai-ui);font-size:.86rem;letter-spacing:0;text-transform:none}
-.fab__btn:hover .tip{opacity:1;transform:translateY(-50%) translateX(0)}
+@media (hover:hover){.fab__btn:hover .tip{opacity:1;transform:translateY(-50%) translateX(0)}}
 @media (max-width:560px){
   .fab{right:50%;bottom:16px;transform:translateX(50%);flex-direction:row}
   .fab__btn{width:52px;height:52px}
